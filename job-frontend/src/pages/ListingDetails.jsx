@@ -25,9 +25,8 @@ export default function ListingDetails() {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:5000/api/listings/view/${id}`
-        );
+        const API_BASE_URL = import.meta.env.VITE_API_URL;
+const res = await fetch(`${API_BASE_URL}/api/listings/view/${id}`);
         const data = await res.json();
         setListing(data);
       } catch (err) {
@@ -83,6 +82,10 @@ export default function ListingDetails() {
       >
         Back
       </button>
+      <button onClick={() => handleDelete(listing._id)}>
+  Delete
+</button>
+
     </div>
   );
 }

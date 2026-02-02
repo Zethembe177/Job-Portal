@@ -31,9 +31,10 @@ export default function EmployerDashboard() {
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/api/listings/my", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const API_BASE_URL = import.meta.env.VITE_API_URL;
+const res = await fetch(`${API_BASE_URL}/api/listings/my`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
       if (res.status === 401) {
         alert("Session expired. Log in again.");
         localStorage.removeItem("token");
@@ -98,9 +99,10 @@ const handleSubmit = async (e) => {
 
   try {
     const method = editingId ? "PUT" : "POST";
-    const url = editingId
-      ? `http://localhost:5000/api/listings/${editingId}`
-      : "http://localhost:5000/api/listings";
+   const API_BASE_URL = import.meta.env.VITE_API_URL;
+const url = editingId
+  ? `${API_BASE_URL}/api/listings/${editingId}`
+  : `${API_BASE_URL}/api/listings`;
 
     // Use FormData for sending text + file
     const submitData = new FormData();
@@ -166,10 +168,11 @@ const handleSubmit = async (e) => {
     if (!window.confirm("Are you sure you want to delete this listing?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/listings/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const API_BASE_URL = import.meta.env.VITE_API_URL;
+const res = await fetch(`${API_BASE_URL}/api/listings/${id}`, {
+  method: "DELETE",
+  headers: { Authorization: `Bearer ${token}` },
+});
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed");
       fetchListings();

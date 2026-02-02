@@ -25,11 +25,10 @@ const [userLocation, setUserLocation] = useState(null);
     try {
       setLoading(true);
       setError("");
-
-      const query = new URLSearchParams(filters).toString();
-      const res = await fetch(`http://localhost:5000/api/listings?${query}`);
-      const data = await res.json();
-
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+const query = new URLSearchParams(filters).toString();
+const res = await fetch(`${API_BASE_URL}/api/listings?${query}`);
+const data = await res.json();
       setListings(data);
     } catch (err) {
       console.error(err);
@@ -80,9 +79,10 @@ const getUserLocation = () => {
     setLoading(true);
     setError("");
 
-    const res = await fetch(
-      `http://localhost:5000/api/listings/nearby?lat=${userLocation.lat}&lng=${userLocation.lng}&radius=${radius}`
-    );
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
+const res = await fetch(
+  `${API_BASE_URL}/api/listings/nearby?lat=${userLocation.lat}&lng=${userLocation.lng}&radius=${radius}`
+);
 
     const data = await res.json();
     setListings(data);

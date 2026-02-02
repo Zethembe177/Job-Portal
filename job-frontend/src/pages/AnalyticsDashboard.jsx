@@ -21,7 +21,9 @@ const AnalyticsDashboard = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/analytics/summary");
+       const baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    
+    const res = await axios.get(`${baseURL}/api/analytics/summary`);
         console.log("Analytics API Response:", res.data);
         setData(res.data);
         setLoading(false); // ✅ stop loading
