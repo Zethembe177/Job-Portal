@@ -20,12 +20,19 @@ const getAllListings = async (req, res) => {
     if (search) query.title = { $regex: search, $options: 'i' };
     if (category) query.category = category;
 
+   // ========================
+    // FIXED SALARY FILTER
+    // ========================
     if (minSalary || maxSalary) {
-      query.salary = {};
-      if (minSalary) query.salary.$gte = Number(minSalary);
-      if (maxSalary) query.salary.$lte = Number(maxSalary);
+      if (minSalary) {
+        // Look inside the salary object at the 'min' field
+        query["salary.min"] = { $gte: Number(minSalary) };
+      }
+      if (maxSalary) {
+        // Look inside the salary object at the 'max' field
+        query["salary.max"] = { $lte: Number(maxSalary) };
+      }
     }
-
     const listings = await Listing.find(query).populate('owner', 'name email');
     res.status(200).json(listings);
   } catch (error) {
