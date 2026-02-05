@@ -8,6 +8,8 @@ import EmployerDashboard from "./pages/EmployerDashboard";
 import CandidateDashboard from "./pages/CandidateDashboard";
 import ListingDetails from "./pages/ListingDetails";
 
+
+
 function App() {
   const { user, logout } = useAuth();
 
@@ -25,6 +27,7 @@ function App() {
         <Routes>
          
 
+<Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/register" element={<Registration />} />
           <Route path="/login" element={<Login />} />
 
